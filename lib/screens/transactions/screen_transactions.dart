@@ -6,6 +6,23 @@ class ScreenTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Screen Transactions'));
+    return ListView.separated(
+        padding: EdgeInsets.all(10),
+        itemBuilder: (ctx, index) {
+          return const Card(
+            elevation: 3,
+            child: ListTile(
+              leading: CircleAvatar(radius: 50, child: Text('12\nDec')),
+              title: Text('Title1000'),
+              subtitle: Text('TravelSubtitle'),
+            ),
+          );
+        },
+        separatorBuilder: (ctx, index) {
+          return SizedBox(
+            height: 10,
+          );
+        },
+        itemCount: 10);
   }
 }
