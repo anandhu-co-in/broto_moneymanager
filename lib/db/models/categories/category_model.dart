@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 
 part 'category_model.g.dart'; //when that generator command is runnnig, as i add this .g.dart filean and saved, the studentmode.g.dart is generated succesfully
 

@@ -8,59 +8,73 @@ ValueNotifier<List<categoryModel>> studentListNotifier = ValueNotifier([]);
 
 abstract class CategoryDBFunctions{
   Future<List<categoryModel>> getCategories();
-  Future<void> insertCategory(categoryModel value);
+  Future<void> addCategory(categoryModel value);
+  Future<void> deleteCategory(int key);
 }
 
 class CategoryDB implements CategoryDBFunctions{
 
+  // Below chunk of code makes this class singletone, (same object is returned when calling CategryDB())
+  CategoryDB._internal();
+  static CategoryDB instance = CategoryDB._internal();
+  factory CategoryDB(){
+    return instance;
+  }
+
+  ValueNotifier<List<categoryModel>> incomeCategories=ValueNotifier([]);
+  ValueNotifier<List<categoryModel>> expenseCategories=ValueNotifier([]);
+
   @override
   Future<List<categoryModel>> getCategories() async {
     final categoryDB = await Hive.openBox<categoryModel>('category_db');
-
-    print(categoryDB.values.toList());
     return categoryDB.values.toList();
-
   }
 
   @override
-  Future<void> insertCategory(categoryModel value) async {
+  Future<void> addCategory(categoryModel value) async {
     final categoryDB = await Hive.openBox<categoryModel>('category_db');
     await categoryDB.add(value);
-
-    getCategories();
+    refreshUI();
   }
+
+  @override
+  Future<void> deleteCategory(int key) async {
+    print("deleting"+key.toString());
+    final categoryDB = await Hive.openBox<categoryModel>('category_db');
+    categoryDB.delete(key);
+    refreshUI();
+  }
+
+
+
+  Future<void> refreshUI() async{
+    List<categoryModel> allCategories=await getCategories();
+
+    incomeCategories.value.clear();
+    expenseCategories.value.clear();
+
+    Future.forEach(allCategories, (categoryModel item){
+
+
+      if(item.type==CategoryType.income){
+        incomeCategories.value.add(item);
+      }else{
+        expenseCategories.value.add(item);
+      }
+    });
+    incomeCategories.notifyListeners();
+    expenseCategories.notifyListeners();
+  }
+
+
 
 }
 
 
-// //get all studentss
-// Future<void> getAllStudents() async{
-//
-//   final studentBD= await Hive.openBox<categoryModel>('student_db');
-//   studentListNotifier.value.clear();
-//   studentListNotifier.value.addAll(studentBD.values);
-//   studentListNotifier.notifyListeners();
-// }
-//
-// //Add new student to hive db
-// Future<void> addStudent(categoryModel value) async{
-//
-//   //save the new student to db
-//   final studentBD= await Hive.openBox<categoryModel>('student_db');
-//   await studentBD.add(value);
-//   getAllStudents();
-// }
 
 
 
 
-// //get all students
-// Future<void> deleteStudent(int key) async{
-//   final studentBD= await Hive.openBox<categoryModel>('student_db');
-//   await studentBD.delete(key);
-//   getAllStudents();
-// }
-//
 
 
 //WHen we use hive
