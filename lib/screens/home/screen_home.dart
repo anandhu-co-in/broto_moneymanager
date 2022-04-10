@@ -1,5 +1,6 @@
 import 'package:brot_moneymanagementapp/db/functions/cateogies/category_functions.dart';
 import 'package:brot_moneymanagementapp/db/models/categories/category_model.dart';
+import 'package:brot_moneymanagementapp/screens/category/category_add_popup.dart';
 import 'package:brot_moneymanagementapp/screens/category/screen_category.dart';
 import 'package:brot_moneymanagementapp/screens/home/widgets/bottom_navigation.dart';
 import 'package:brot_moneymanagementapp/screens/transactions/screen_transactions.dart';
@@ -36,9 +37,11 @@ class ScreenHome extends StatelessWidget {
               print('Clicked plus at add transaction');
             }else{
               print('Clicked Plust at Addcategory');
+
+              showAddCategoryPopup(context);
               
-              final newCategory=categoryModel(name: 'Anandhu', type: CategoryType.income);
-              CategoryDB().insertCategory(newCategory);
+              // final newCategory=categoryModel(name: 'Anandhu', type: CategoryType.income);
+              // CategoryDB().insertCategory(newCategory);
               
             }
 
