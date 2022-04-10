@@ -1,7 +1,22 @@
+import 'package:brot_moneymanagementapp/db/models/categories/category_model.dart';
 import 'package:brot_moneymanagementapp/screens/home/screen_home.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main() {
+Future<void> main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+
+  if(!Hive.isAdapterRegistered(CategoryTypeAdapter().typeId)){
+    Hive.registerAdapter(CategoryTypeAdapter());
+  }
+
+  if(!Hive.isAdapterRegistered(categoryModelAdapter().typeId)){
+    Hive.registerAdapter(categoryModelAdapter());
+  }
+
+
   runApp(const MyApp());
 }
 

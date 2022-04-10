@@ -1,3 +1,4 @@
+import 'package:brot_moneymanagementapp/db/functions/cateogies/category_functions.dart';
 import 'package:brot_moneymanagementapp/screens/category/expense_list.dart';
 import 'package:brot_moneymanagementapp/screens/category/income_list.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,10 @@ class _ScreenCategoryState extends State<ScreenCategory>
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
+
+    // To check if db functions work
+    CategoryDB().getCategories().then((value) => print(value));
+
     super.initState();
   }
 
@@ -36,7 +41,9 @@ class _ScreenCategoryState extends State<ScreenCategory>
                 text: 'Expense',
               ),
             ]),
-        SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         Expanded(
           //Expanded is required else will get error
           child: TabBarView(
