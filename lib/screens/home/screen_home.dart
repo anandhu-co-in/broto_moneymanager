@@ -1,5 +1,6 @@
 import 'package:brot_moneymanagementapp/db/functions/cateogies/category_functions.dart';
 import 'package:brot_moneymanagementapp/db/models/categories/category_model.dart';
+import 'package:brot_moneymanagementapp/screens/add_transactions/screen_add_transaction.dart';
 import 'package:brot_moneymanagementapp/screens/category/category_add_popup.dart';
 import 'package:brot_moneymanagementapp/screens/category/screen_category.dart';
 import 'package:brot_moneymanagementapp/screens/home/widgets/bottom_navigation.dart';
@@ -33,18 +34,19 @@ class ScreenHome extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            if(selectedIndexNotifier.value==0) {
+            if (selectedIndexNotifier.value == 0) {
               print('Clicked plus at add transaction');
-            }else{
+
+              Navigator.of(context).pushNamed(ScreenAddTransaction.routeName);
+            } else {
               print('Clicked Plust at Addcategory');
 
               showAddCategoryPopup(context);
-              
+
               // final newCategory=categoryModel(name: 'Anandhu', type: CategoryType.income);
               // CategoryDB().insertCategory(newCategory);
-              
-            }
 
+            }
           }),
     );
   }

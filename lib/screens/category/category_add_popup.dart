@@ -2,8 +2,8 @@ import 'package:brot_moneymanagementapp/db/functions/cateogies/category_function
 import 'package:brot_moneymanagementapp/db/models/categories/category_model.dart';
 import 'package:flutter/material.dart';
 
-ValueNotifier<CategoryType> selectedCategoryNotifier = ValueNotifier(CategoryType.income);
-
+ValueNotifier<CategoryType> selectedCategoryNotifier =
+    ValueNotifier(CategoryType.income);
 
 final _categoryNameController = TextEditingController();
 
@@ -39,12 +39,13 @@ Future<void> showAddCategoryPopup(BuildContext context) {
               child: ElevatedButton(
                 onPressed: () {
                   //Create model object and insert it into database
-                  final _name=_categoryNameController.text;
-                  if(_name.isEmpty){
+                  final _name = _categoryNameController.text;
+                  if (_name.isEmpty) {
                     print("empty name");
                     return;
                   }
-                  final _category=categoryModel(name: _name, type: selectedCategoryNotifier.value);
+                  final _category = categoryModel(
+                      name: _name, type: selectedCategoryNotifier.value);
                   CategoryDB().addCategory(_category);
 
                   //Adding these 2 lines to rese the fields before closing the form

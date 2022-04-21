@@ -9,7 +9,7 @@ class IncomeList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
         valueListenable: CategoryDB().incomeCategories,
-        builder: (BuildContext ctx, List<categoryModel> list, Widget? _){
+        builder: (BuildContext ctx, List<categoryModel> list, Widget? _) {
           return ListView.separated(
               itemBuilder: (ctx, index) {
                 return Card(
@@ -30,7 +30,6 @@ class IncomeList extends StatelessWidget {
                 );
               },
               itemCount: list.length);
-        }
-    );
+        });
   }
 }
