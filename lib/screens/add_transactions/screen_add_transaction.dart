@@ -16,6 +16,16 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
   DateTime? _selectedDate;
   CategoryType? _selectedCategoryType;
   categoryModel? _selectedCategoryModel;
+  dynamic _selectedCategoryKey;
+
+  @override
+  void initState() {
+    CategoryDB()
+        .refreshUI(); // this maynot be how it should be done, this is my temp way
+    _selectedCategoryType = CategoryType.income;
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +85,14 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
                       children: [
                         Radio(
                             value: CategoryType.income,
-                            groupValue: CategoryType.income,
-                            onChanged: (newValue) {}),
+                            groupValue: _selectedCategoryType,
+                            onChanged: (newValue) {
+                              setState(() {
+                                _selectedCategoryType = CategoryType.income;
+                                _selectedCategoryKey =
+                                    null; //if i dont clear the current selected id, it will cause error, since it will look the same id in the expense list while we are switching from income ot exepense
+                              });
+                            }),
                         const Text('Income')
                       ],
                     ),
@@ -84,22 +100,33 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
                       children: [
                         Radio(
                             value: CategoryType.expense,
-                            groupValue: CategoryType.income,
-                            onChanged: (newValue) {}),
+                            groupValue: _selectedCategoryType,
+                            onChanged: (newValue) {
+                              setState(() {
+                                _selectedCategoryType = CategoryType.expense;
+                                _selectedCategoryKey = null;
+                              });
+                            }),
                         const Text('Expense')
                       ],
                     )
                   ]),
-              DropdownButton(
-                hint: const Text('Select item'),
-                items: CategoryDB()
-                    .expenseCategories
+              DropdownButton<dynamic>(
+                //dybanid is the type of value
+                hint: const Text(
+                    'Select item'), //When value is null, this hint will be shown, else the dropwown menu item with that value
+                value: _selectedCategoryKey,
+                items: (_selectedCategoryType == CategoryType.expense
+                        ? CategoryDB().expenseCategories
+                        : CategoryDB().incomeCategories)
                     .value
                     .map((item) => DropdownMenuItem(
                         value: item.key, child: Text(item.name)))
                     .toList(),
                 onChanged: (selectedValue) {
-                  print(selectedValue);
+                  setState(() {
+                    _selectedCategoryKey = selectedValue;
+                  });
                 },
               ),
               ElevatedButton(onPressed: () {}, child: const Text('Submit'))
