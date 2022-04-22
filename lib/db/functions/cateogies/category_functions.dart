@@ -25,6 +25,7 @@ class CategoryDB implements CategoryDBFunctions {
   @override
   Future<List<categoryModel>> getCategories() async {
     final categoryDB = await Hive.openBox<categoryModel>('category_db');
+    print('RETREIVED ALL CATEGOEIES FROM DB');
     return categoryDB.values.toList();
   }
 
