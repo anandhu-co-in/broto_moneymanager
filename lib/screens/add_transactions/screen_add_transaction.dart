@@ -25,10 +25,7 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
 
   @override
   void initState() {
-    CategoryDB()
-        .refreshUI(); // this maynot be how it should be done, this is my temp way
     _selectedCategoryType = CategoryType.income;
-    // TODO: implement initState
     super.initState();
   }
 
@@ -177,7 +174,7 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
 
                     await TransactionDB.instance.addTrasaction(transaction);
                     Navigator.of(context).pop();
-  
+
                   },
                   child: const Text('Submit'))
             ],
