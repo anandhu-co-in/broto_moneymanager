@@ -38,6 +38,7 @@ dependencies:
   # Add below to use hive database
   hive_flutter: ^1.1.0
   intl: 0.17.0
+  flutter_slidable: ^1.2.0
 
 dev_dependencies:
   flutter_test:
