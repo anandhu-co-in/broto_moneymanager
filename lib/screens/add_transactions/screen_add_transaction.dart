@@ -1,5 +1,7 @@
 import 'package:brot_moneymanagementapp/db/functions/cateogies/category_functions.dart';
+import 'package:brot_moneymanagementapp/db/functions/transactions/transaction_functions.dart';
 import 'package:brot_moneymanagementapp/db/models/categories/category_model.dart';
+import 'package:brot_moneymanagementapp/db/models/transactions/transaction_model.dart';
 import 'package:flutter/material.dart';
 
 class ScreenAddTransaction extends StatefulWidget {
@@ -17,6 +19,9 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
   CategoryType? _selectedCategoryType;
   categoryModel? _selectedCategoryModel;
   dynamic _selectedCategoryKey;
+
+  final _purposeController = TextEditingController();
+  final _amountController = TextEditingController();
 
   @override
   void initState() {
@@ -37,11 +42,13 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
+                controller: _purposeController,
                 decoration: const InputDecoration(
                   hintText: 'Purpose',
                 ),
               ),
               TextFormField(
+                controller: _amountController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(hintText: 'Amount'),
               ),
@@ -121,7 +128,11 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
                         : CategoryDB().incomeCategories)
                     .value
                     .map((item) => DropdownMenuItem(
-                        value: item.key, child: Text(item.name)))
+                        onTap: () {
+                          _selectedCategoryModel = item;
+                        },
+                        value: item.key,
+                        child: Text(item.name)))
                     .toList(),
                 onChanged: (selectedValue) {
                   setState(() {
@@ -129,7 +140,46 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
                   });
                 },
               ),
-              ElevatedButton(onPressed: () {}, child: const Text('Submit'))
+              ElevatedButton(
+                  onPressed: () async {
+
+                    if(_purposeController.text.trim().isEmpty){
+                      print("Enter purpose");
+                      return;
+                    }
+
+                    if(_amountController.text.trim().isEmpty){
+                      print("Enter amount");
+                      return;
+                    }
+
+                    if(_selectedDate==null){
+                      print("select date");
+                      return;
+                    }
+
+                    if(_selectedCategoryKey==null){
+                      print("select category");
+                      return;
+                    }
+
+                    if(double.tryParse(_amountController.text)==null){
+                      print("couldnt parse amount");
+                      return;
+                    }
+
+                    TransactionModel transaction = TransactionModel(
+                        purpose: _purposeController.text,
+                        amount: double.parse(_amountController.text),
+                        date: _selectedDate!,
+                        category: _selectedCategoryModel!,
+                        type: _selectedCategoryType!);
+
+                    await TransactionDB.instance.addTrasaction(transaction);
+                    Navigator.of(context).pop();
+  
+                  },
+                  child: const Text('Submit'))
             ],
           ),
         ),

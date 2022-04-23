@@ -1,4 +1,5 @@
 import 'package:brot_moneymanagementapp/db/models/categories/category_model.dart';
+import 'package:brot_moneymanagementapp/db/models/transactions/transaction_model.dart';
 import 'package:brot_moneymanagementapp/screens/add_transactions/screen_add_transaction.dart';
 import 'package:brot_moneymanagementapp/screens/home/screen_home.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,11 @@ Future<void> main() async {
   if (!Hive.isAdapterRegistered(categoryModelAdapter().typeId)) {
     Hive.registerAdapter(categoryModelAdapter());
   }
+
+  if (!Hive.isAdapterRegistered(TransactionModelAdapter().typeId)) {
+    Hive.registerAdapter(TransactionModelAdapter());
+  }
+
 
   runApp(const MyApp());
 }
