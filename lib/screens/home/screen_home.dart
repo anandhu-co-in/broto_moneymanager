@@ -5,6 +5,7 @@ import 'package:brot_moneymanagementapp/screens/category/category_add_popup.dart
 import 'package:brot_moneymanagementapp/screens/category/screen_category.dart';
 import 'package:brot_moneymanagementapp/screens/home/widgets/bottom_navigation.dart';
 import 'package:brot_moneymanagementapp/screens/transactions/screen_transactions.dart';
+import 'package:brot_moneymanagementapp/screens/webrequests/screen_api_response.dart';
 import 'package:flutter/material.dart';
 
 class ScreenHome extends StatelessWidget {
@@ -12,7 +13,11 @@ class ScreenHome extends StatelessWidget {
 
   static ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
 
-  final _pages = const [ScreenTransactions(), ScreenCategory()];
+  final _pages = const [
+    ScreenTransactions(),
+    ScreenCategory(),
+    ScreenShowNumbnerInfo()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,7 @@ class ScreenHome extends StatelessWidget {
               print('Clicked plus at add transaction');
 
               Navigator.of(context).pushNamed(ScreenAddTransaction.routeName);
-            } else {
+            } else if (selectedIndexNotifier.value == 1) {
               print('Clicked Plust at Addcategory');
 
               showAddCategoryPopup(context);

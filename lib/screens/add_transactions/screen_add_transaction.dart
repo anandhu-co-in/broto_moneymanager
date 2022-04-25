@@ -139,28 +139,27 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
               ),
               ElevatedButton(
                   onPressed: () async {
-
-                    if(_purposeController.text.trim().isEmpty){
+                    if (_purposeController.text.trim().isEmpty) {
                       print("Enter purpose");
                       return;
                     }
 
-                    if(_amountController.text.trim().isEmpty){
+                    if (_amountController.text.trim().isEmpty) {
                       print("Enter amount");
                       return;
                     }
 
-                    if(_selectedDate==null){
+                    if (_selectedDate == null) {
                       print("select date");
                       return;
                     }
 
-                    if(_selectedCategoryKey==null){
+                    if (_selectedCategoryKey == null) {
                       print("select category");
                       return;
                     }
 
-                    if(double.tryParse(_amountController.text)==null){
+                    if (double.tryParse(_amountController.text) == null) {
                       print("couldnt parse amount");
                       return;
                     }
@@ -174,7 +173,6 @@ class _ScreenAddTransactionState extends State<ScreenAddTransaction> {
 
                     await TransactionDB.instance.addTrasaction(transaction);
                     Navigator.of(context).pop();
-
                   },
                   child: const Text('Submit'))
             ],

@@ -21,7 +21,6 @@ Future<void> main() async {
     Hive.registerAdapter(TransactionModelAdapter());
   }
 
-
   runApp(const MyApp());
 }
 

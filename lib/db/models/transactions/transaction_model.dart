@@ -24,7 +24,11 @@ class TransactionModel extends HiveObject {
   final categoryModel category;
 
   TransactionModel(
-      {required this.purpose, required this.amount, required this.date,required this.category,required this.type});
+      {required this.purpose,
+      required this.amount,
+      required this.date,
+      required this.category,
+      required this.type});
 
   @override
   String toString() {

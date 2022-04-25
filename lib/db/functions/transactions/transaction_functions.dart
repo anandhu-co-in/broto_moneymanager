@@ -50,9 +50,8 @@ class TransactionDB implements TransactionDBFunctions {
     print(allTransactions);
 
     transactions.value.clear();
-    transactions.value=allTransactions;
+    transactions.value = allTransactions;
     transactions.notifyListeners();
-
   }
 }
 

@@ -20,7 +20,9 @@ class MoneyManagerBottomNavigation extends StatelessWidget {
                 BottomNavigationBarItem(
                     icon: Icon(Icons.home), label: 'Transactions'),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.category), label: 'Categories')
+                    icon: Icon(Icons.category), label: 'Categories'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.web), label: 'Web Request')
               ]);
         });
   }
